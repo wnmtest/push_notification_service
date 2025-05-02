@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo
+    container_name: mongo-container
+    restart: always
+
+  notification-service:
+    build: .
+    ports:
+      - "9892:9892"
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb://mongo-container:27017/notificationdb
+    depends_on:
+      - mongo
